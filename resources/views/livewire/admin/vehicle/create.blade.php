@@ -34,7 +34,6 @@
                                 class="active">
                                 Vehicle Type
                             </label>
-
                             <select
                                 wire:model.defer="vehicle_type_id"
                             >

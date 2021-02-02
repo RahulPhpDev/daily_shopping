@@ -36,6 +36,7 @@ Route::group([
 
         Route::get('vehicle-type', 'VehicleTypeController')->name('vehicle-type');
         Route::get('vehicle', 'VehicleController')->name('vehicle');
+        Route::get('location', 'LocationController')->name('location');
 
 
 });

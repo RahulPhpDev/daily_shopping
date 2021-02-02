@@ -28,14 +28,15 @@
                     />
 
                     <x-admin.navigation
-                        names='vehicle'
+                        names='Vehicle'
                         link='admin.vehicle'
                         icon="directions_bus"
                     />
-{{--                    <x-admin.navigation--}}
-{{--                        names='location'--}}
-{{--                        link='admin.location.index'--}}
-{{--                        icon="location"--}}
+                    <x-admin.navigation
+                        names='Location'
+                        link='admin.location'
+                        icon="add_location"
+                        />
 
     </ul>
 </aside>

@@ -2,6 +2,7 @@
 
 namespace App\View\Components\Admin;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\Component;
 use Illuminate\Support\Facades\Route;
 

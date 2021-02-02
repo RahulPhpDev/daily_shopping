@@ -14,6 +14,10 @@ class BrandController extends Controller
      */
     public function index()
     {
+        // get all record in descending  order
+//        $brands = Brand::orderBydesc('id')->get();
+//        dd($brands);
+
         return view('admin.brand.index');
     }
 

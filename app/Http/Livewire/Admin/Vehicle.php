@@ -51,13 +51,10 @@ class Vehicle extends Component
     public function store()
     {
         $validatedData = $this->validate();
-        $validatedData['vehicle_type_id'] = (int )$validatedData['vehicle_type_id'] ;
         VehicleModel::create( $validatedData );
         session()->flash('message', FlashMessagesEnum::CreatedMsg);
         $this->resetInputFields();
-
         $this->emit('modalFadeOut');
-
 
     }
 
@@ -70,7 +67,7 @@ class Vehicle extends Component
         $this->name = $vehicle->name;
         $this->number = $vehicle->number;
         $this->details = $vehicle->details;
-        $this->name = $vehicle->name;
+        $this->vehicle_type_id = $vehicle->vehicle_type_id;
     }
 
     public function update()
@@ -105,7 +102,7 @@ class Vehicle extends Component
     public function render()
     {
         return view('livewire.admin.vehicle.index', [
-            'records' =>VehicleModel::paginate(PaginationEnum::Show10Records),
+            'records' => VehicleModel::with('vehicleType')->paginate(PaginationEnum::Show10Records),
             'vehicleTypes' => VehicleTypeModel::pluck('name', 'id')
         ]);
     }
