@@ -11,9 +11,9 @@ class ProductRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize():bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,10 +21,38 @@ class ProductRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules() :array
+    {
+        return array_merge(
+            $this->productValidation(),
+            $this->attributeValidation()
+        );
+    }
+
+    public function productValidation():array
     {
         return [
-            //
+          'name' => 'required|min:1',
+            'unit_id' => 'required',
+            'category_id' => 'required'
         ];
+    }
+
+    public function attributeValidation(): array
+    {
+        return [
+            'brand_id.*' => 'required',
+            'attribute.*' => 'required|min:2',
+            'quantity.*' => 'required',
+            'buying_price.*' => 'required',
+            'selling_price.*' => 'required',
+            'count_times' => 'required'
+        ];
+    }
+
+
+    private function image()
+    {
+
     }
 }

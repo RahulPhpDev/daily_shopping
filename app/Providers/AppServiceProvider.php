@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use Illuminate\Http\Resources\Json\JsonResource;
+use App\Observers\UserObserver;
+use App\User;
 use App\View\Components\Admin\PageHead;
-use App\View\Components\admin\SidebarNavigation;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 
@@ -27,5 +29,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Blade::component('page-head', PageHead::class);
+        User::observe(UserObserver::class);
+        JsonResource::withoutWrapping();
     }
 }

@@ -14,10 +14,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('testing/test');
+    return redirect('/login');
+//    return view('testing/test');
 });
 
-Auth::routes();
+Auth::routes(
+    [
+        'register' => false, // Registration Routes...
+        'reset' => false, // Password Reset Routes...
+        'verify' => false, // Email Verification Routes...
+    ]
+);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -30,13 +37,19 @@ Route::group([
     'as' => 'admin.',// name argument
     'prefix' => 'admin',//append this in url
     'namespace' => 'Admin',
+    'middleware' => 'admin'
 ], function () {
+        Route::get('user', 'UserController')->name('user');
         Route::resource('brands', 'BrandController');
         Route::get('category', 'CategoryController')->name('category');
 
         Route::get('vehicle-type', 'VehicleTypeController')->name('vehicle-type');
         Route::get('vehicle', 'VehicleController')->name('vehicle');
         Route::get('location', 'LocationController')->name('location');
+        Route::get('unit', 'UnitController')->name('unit');
+        Route::get('product/add-more-attribute/{num}', 'ProductController@addMoreAttribute')->name('addMoreAttribute');
+        Route::resource('product', 'ProductController');
+        Route::get('inventory', 'InventoryController')->name('inventory');
 
 
 });

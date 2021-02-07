@@ -9,8 +9,11 @@
 
     <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion">
 
-
-
+                    <x-admin.navigation
+                        names='user'
+                        link='admin.user'
+                        icon="accessibility"
+                    />
                     <x-admin.navigation
                         names='brand'
                         link='admin.brands.index'
@@ -32,11 +35,26 @@
                         link='admin.vehicle'
                         icon="directions_bus"
                     />
-                    <x-admin.navigation
-                        names='Location'
-                        link='admin.location'
-                        icon="add_location"
-                        />
+                <x-admin.navigation
+                    names='Location'
+                    link='admin.location'
+                    icon="add_location"
+                />
+                <x-admin.navigation
+                    names='Unit'
+                    link='admin.unit'
+                    icon="unit"
+                />
+                  <x-admin.navigation
+                    names='Product'
+                    link='admin.product.index'
+                    icon="add_product"
+                />
+                <x-admin.navigation
+                    names='Inventory'
+                    link='admin.inventory'
+                    icon="inventory"
+                />
 
     </ul>
 </aside>
