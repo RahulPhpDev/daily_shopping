@@ -26,29 +26,24 @@
                     <div class="row">
 
                         <div class="input-field col m6 s6">
-
-
-
                             <label
                                 for="icon_prefix2"
                                 class="active">
                                 Vehicle Type
                             </label>
                             <select
+                                class="browser-default"
                                 wire:model.defer="vehicle_type_id"
                             >
                                 @foreach( $vehicleTypes as $vn => $vt)
                                     <option wire:key ="{{ $vn }}" value ="{{ $vn  }}">{{ $vt  }} </option>
                                 @endforeach
                             </select>
-
-
-
-{{--                            @error('vehicle_type_id')--}}
-{{--                            <span class="text-danger">--}}
-{{--                                    {{ $message }}--}}
-{{--                                </span>--}}
-{{--                            @enderror--}}
+                            @error('vehicle_type_id')
+                            <span class="text-danger">
+                                    {{ $message }}
+                                </span>
+                            @enderror
                         </div>
 
 

@@ -58,15 +58,15 @@
             @enderror
         </div>
 
-        <div class="input-field col m4 s12 file-field">
-            <div class="btn float-right">
-                <span>Attribute Image</span>
-                <input type="file" name="attribute_image[{{$num}}]">
-            </div>
-            <div class="file-path-wrapper">
-                <input class="file-path validate" type="text" />
-            </div>
-        </div>
+{{--        <div class="input-field col m4 s12 file-field">--}}
+{{--            <div class="btn float-right">--}}
+{{--                <span>Attribute Image</span>--}}
+{{--                <input type="file" name="attribute_image[{{$num}}]">--}}
+{{--            </div>--}}
+{{--            <div class="file-path-wrapper">--}}
+{{--                <input class="file-path validate" type="text" />--}}
+{{--            </div>--}}
+{{--        </div>--}}
     </div>
 
 </div>

@@ -32,7 +32,7 @@ class ProductRequest extends FormRequest
     public function productValidation():array
     {
         return [
-          'name' => 'required|min:1',
+             'name' => 'required|min:1',
             'unit_id' => 'required',
             'category_id' => 'required'
         ];

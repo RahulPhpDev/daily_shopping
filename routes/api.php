@@ -31,4 +31,5 @@ Route::group([
     Route::get('category/{category_id}/products', 'ProductApiController@categoryProduct');
     Route::put('update/profile', 'ProfileApiController@updateProfile');
     Route::get('my/orders/{user_id}', 'OrderApiController@myOrder');
+    Route::post('order', 'OrderApiController@create');
 });

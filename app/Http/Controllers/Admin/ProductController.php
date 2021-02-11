@@ -68,7 +68,7 @@ class ProductController extends Controller
             $rec = $request->only(
                 array_keys($request->attributeValidation()
                 )) ;
-          for ($i = 0; $i < count($rec['brand_id']);$i++)
+          for ($i = 0; $i < $rec['count_times']; $i++)
           {
 
               $attribute =  $product->attributes()->save(
@@ -89,21 +89,13 @@ class ProductController extends Controller
                   )
               );
           }
-//            dd( $rec[0]);
-
-
             DB::commit();
-            dd('test');
+          return redirect()->route('admin.product.index');
         } catch ( Exception $exception)
         {
             DB::rollBack();
             dd($exception);
         }
-        dump($_POST, array_keys($request->productValidation()));
-    dd($request->all(), $request->input('brand_id'));
-
-
-
     }
 
     /**
@@ -144,10 +136,13 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(int $id)
     {
-        //
+       $product = Product::find($id);
+       $product->delete();
+       return redirect()->route('admin.product.index');
     }
+
 }

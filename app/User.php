@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Enums\RoleEnum;
 use App\Models\Roles;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -64,6 +65,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Roles::class, 'user_role','user_id','role_id');
     }
 
+    public function scopeCustomers($query)
+    {
+        return $query->roles->whereIn('id', RoleEnum::Customer);
+    }
 
 
 }

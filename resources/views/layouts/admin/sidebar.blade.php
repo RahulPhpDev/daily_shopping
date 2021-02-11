@@ -15,14 +15,19 @@
                         icon="accessibility"
                     />
                     <x-admin.navigation
+                        names='category'
+                        link='admin.category'
+                        icon="category"
+                    />
+                    <x-admin.navigation
                         names='brand'
                         link='admin.brands.index'
                         icon="branding_watermark"
                     />
                     <x-admin.navigation
-                        names='category'
-                        link='admin.category'
-                        icon="category"
+                        names='Unit'
+                        link='admin.unit'
+                        icon="unit"
                     />
                     <x-admin.navigation
                         names='Vehicle Type'
@@ -39,11 +44,6 @@
                     names='Location'
                     link='admin.location'
                     icon="add_location"
-                />
-                <x-admin.navigation
-                    names='Unit'
-                    link='admin.unit'
-                    icon="unit"
                 />
                   <x-admin.navigation
                     names='Product'

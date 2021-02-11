@@ -9,7 +9,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Add Brand</h5>
-                </button>
+                <a href="javascript:void(0);"
+                   class="red-text float-right modal-action modal-close waves-effect waves-green btn-flat ">x</a>
             </div>
             <div class="modal-body">
 

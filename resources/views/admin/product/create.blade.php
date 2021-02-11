@@ -50,7 +50,7 @@
            complete: function(){
                console.log('completed');
                $("#count_times").val(count_times);
-               if ( count_times >= 2)
+               if ( count_times >= 5)
                {
                    $('#addMore').hide();
                }

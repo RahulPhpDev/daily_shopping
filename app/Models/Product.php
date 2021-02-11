@@ -18,6 +18,7 @@ class Product extends Model
       'uuid',
       'brand_id',
       'category_id',
+      'name',
       'unit_id'
     ];
     public $with = [ 'category', 'unit'];

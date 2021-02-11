@@ -103,7 +103,7 @@ class Vehicle extends Component
     {
         return view('livewire.admin.vehicle.index', [
             'records' => VehicleModel::with('vehicleType')->paginate(PaginationEnum::Show10Records),
-            'vehicleTypes' => VehicleTypeModel::pluck('name', 'id')
+            'vehicleTypes' => VehicleTypeModel::pluck('name', 'id')->prepend(' ', 'Select Vehicle')
         ]);
     }
 }

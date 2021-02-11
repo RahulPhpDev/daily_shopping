@@ -5,6 +5,20 @@
 
                 <div class="row">
                     <div class="input-field col m4 s6">
+                        <select name="category_id">
+                            @foreach( $categories as $key => $value)
+                                <option value="{{$key}}">{{$value}}</option>
+                            @endforeach
+                        </select>
+                        <label>Select Category</label>
+                        @error('category_id')
+                        <span class="text-danger">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="input-field col m4 s6">
                         <input id="icon_prefix1" type="text" name="name" class="validate">
                         <label for="icon_prefix1">Name</label>
                     @error('name')
@@ -28,19 +42,6 @@
                         @enderror
                     </div>
 
-                    <div class="input-field col m4 s6">
-                        <select name="category_id">
-                            @foreach( $categories as $key => $value)
-                                <option value="{{$key}}">{{$value}}</option>
-                            @endforeach
-                        </select>
-                        <label>Select Category</label>
-                        @error('category_id')
-                        <span class="text-danger">
-                                {{ $message }}
-                            </span>
-                        @enderror
-                    </div>
                 </div>
         </div>
     </div>

@@ -18,6 +18,7 @@ Route::get('/', function () {
 //    return view('testing/test');
 });
 
+
 Auth::routes(
     [
         'register' => false, // Registration Routes...
@@ -49,6 +50,7 @@ Route::group([
         Route::get('unit', 'UnitController')->name('unit');
         Route::get('product/add-more-attribute/{num}', 'ProductController@addMoreAttribute')->name('addMoreAttribute');
         Route::resource('product', 'ProductController');
+        Route::resource('attribute', 'AttributeController', ['product_id']);
         Route::get('inventory', 'InventoryController')->name('inventory');
 
 

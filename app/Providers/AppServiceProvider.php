@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Product;
+use App\Observers\ProductObserver;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Observers\UserObserver;
 use App\User;
@@ -30,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Blade::component('page-head', PageHead::class);
         User::observe(UserObserver::class);
+        Product::observe( ProductObserver::class );
         JsonResource::withoutWrapping();
     }
 }

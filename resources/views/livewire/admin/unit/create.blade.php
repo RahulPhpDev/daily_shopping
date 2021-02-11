@@ -13,6 +13,8 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">
                     <x-page-head flag="true" argument='add'/>
+                    <a href="javascript:void(0);"
+                       class="red-text float-right modal-action modal-close waves-effect waves-green btn-flat ">x</a>
                 </h5>
                 </button>
             </div>
