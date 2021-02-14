@@ -14,7 +14,7 @@ class Inventory extends Component
    protected $paginationTheme = 'bootstrap';
 
    public $brand_id,$product_id, $category_id, $attribute_id;
-  public $request;
+   public $request;
 
   public $fields = [
           'id',

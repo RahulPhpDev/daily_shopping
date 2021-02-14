@@ -13,7 +13,6 @@ class CreateUnitsTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('units');
         Schema::create('units', function (Blueprint $table) {
             $table->id();
             $table->string('name', 20);
@@ -28,6 +27,10 @@ class CreateUnitsTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+
         Schema::dropIfExists('units');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+
     }
 }

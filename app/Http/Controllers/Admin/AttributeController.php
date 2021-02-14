@@ -23,9 +23,17 @@ class AttributeController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function index($product_id)
+    public function index(Request $request)
     {
-       $records = ProductAttribute::with('brand','inventory', 'product')->where('product_id', $product_id)->paginate(PaginationEnum::Show10Records);
+
+    if (!$product_id = $request->get('product_id'))
+    {
+        abort('not found');
+    }
+       $records = ProductAttribute::
+                with('brand','inventory', 'product')
+                ->where('product_id', $request->get('product_id'))
+                ->paginate(PaginationEnum::Show10Records);
 //       dd($records);
        $product = Product::select('id', 'name')->findOrFail($product_id);
       return view('admin.product-attribute.index', compact('records', 'product'));

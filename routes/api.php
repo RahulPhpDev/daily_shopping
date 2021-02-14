@@ -30,6 +30,7 @@ Route::group([
     Route::get('products','ProductApiController@index');
     Route::get('category/{category_id}/products', 'ProductApiController@categoryProduct');
     Route::put('update/profile', 'ProfileApiController@updateProfile');
-    Route::get('my/orders/{user_id}', 'OrderApiController@myOrder');
+    Route::get('order/{user_id}', 'OrderApiController@index');
     Route::post('order', 'OrderApiController@create');
+    Route::get('/order/{id}/details', 'OrderApiController@details');
 });

@@ -28,6 +28,9 @@ class AddUnitColumnInProduct extends Migration
      */
     public function down()
     {
+        Schema::table('products', function (Blueprint $table) {
 
+
+        });
     }
 }

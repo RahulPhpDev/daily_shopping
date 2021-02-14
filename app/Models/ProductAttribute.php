@@ -10,7 +10,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ProductAttribute extends Model
 {
     use SoftDeletes;
+
     protected $fillable = ['brand_id','product_id','attribute_name','buying_price', 'selling_price'];
+
     public $timestamps = false;
 
 
@@ -33,4 +35,13 @@ class ProductAttribute extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    /**
+     * @return BelongsTo
+     */
+    public function orderDeliveries() : BelongsTo
+    {
+        return $this->belongsTo(OrderProductDelivery::class, 'order_product_attribute_id');
+    }
+
 }

@@ -40,6 +40,7 @@ Route::group([
     'namespace' => 'Admin',
     'middleware' => 'admin'
 ], function () {
+        Route::redirect('', 'admin/user');
         Route::get('user', 'UserController')->name('user');
         Route::resource('brands', 'BrandController');
         Route::get('category', 'CategoryController')->name('category');
@@ -52,7 +53,13 @@ Route::group([
         Route::resource('product', 'ProductController');
         Route::resource('attribute', 'AttributeController', ['product_id']);
         Route::get('inventory', 'InventoryController')->name('inventory');
-
+        Route::get('driver/location-options/{type}', 'DriverController@locationOptions');
+        Route::get('driver/{userId}/create', 'DriverController@create')->name('driver.location.create');
+        Route::post('driver/{userId}/store', 'DriverController@store')->name('driver.location.store');
+        Route::get('driver', 'DriverController@index')->name('driver.index');
+//        Route::get('driver', 'DriverController')->name('driver');
+    Route::get('order/items/{orderId}', 'OrderController@items');
+        Route::resource('order', 'OrderController')->except(['create']);
 
 });
 

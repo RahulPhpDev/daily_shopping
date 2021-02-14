@@ -238,6 +238,7 @@
 <script src ="{{ URL::asset('admin-assets/js/customizer.js') }}"/></script>
 <script src ="{{ URL::asset('admin-assets/js/advance-ui-modals.js') }}"/></script>
 <script src ="{{ URL::asset('admin-assets/js/advance-ui-toasts.js') }}"/></script>
+<script src ="{{ URL::asset('admin-assets/js/form-select2.min.js') }}"/></script>
 
 
 
@@ -258,6 +259,15 @@
     window.livewire.on('modalFadeOut', () => {
         $('#createModal').modal('close');
         $('#editModal').modal('close');
+    });
+
+
+    document.addEventListener('livewire:load', function (event) {
+
+        console.log('fsdfs');
+        // window.livewire.hook('afterDomUpdate', () => {
+        //     $('.select2').select2();
+        // });
     });
 </script>
 

@@ -18,6 +18,7 @@
     <link href ={{ URL::asset('admin-assets/css/materialize.css') }} rel="stylesheet" />
     <link href ={{ URL::asset('admin-assets/css/style.css') }} rel="stylesheet" />
     <link href ={{ URL::asset('admin-assets/css/custom.css') }} rel="stylesheet" />
+    <link href ={{ URL::asset('admin-assets/css/form-select2.css') }} rel="stylesheet" />
 
     @livewireStyles
     <script src ="{{ URL::asset('admin-assets/js/vendors.min.js') }}"/></script>

@@ -11,7 +11,7 @@
     <td>
         <a class="modal-trigger btn-small-custom waves-effect  waves-light btn gradient-45deg-light-blue-cyan z-depth-3  mr-3 btn-small-custom"
 
-           href="{{ route('admin.attribute.index',[$record->id] ) }}"> Attribute </a>
+           href="{{ route('admin.attribute.index',['product_id=$record->id'] ) }}"> Attribute </a>
     </td>
     <td>
 
