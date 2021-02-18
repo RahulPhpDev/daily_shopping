@@ -41,7 +41,6 @@ class Order extends Model
 
     public function getOrderStatusAttribute()
     {
-//        dd( array_keys(OrderStatusEnum::status));
         return array_keys(OrderStatusEnum::status)[$this->status];
     }
 
@@ -91,5 +90,14 @@ class Order extends Model
     {
        return $this->belongsTo(User::class);
     }
+
+    /**
+     * @return BelongsTo
+     */
+    public function location() : BelongsTo
+    {
+       return $this->belongsTo(Location::class, 'user_location_id');
+    }
+
 
 }

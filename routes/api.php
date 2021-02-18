@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
-
+Route::get('advertisement', 'Api\AdvertisementApiController@index');
 Route::group([
     'namespace' => 'Api',
     'middleware' => 'apiToken',
@@ -33,4 +33,8 @@ Route::group([
     Route::get('order/{user_id}', 'OrderApiController@index');
     Route::post('order', 'OrderApiController@create');
     Route::get('/order/{id}/details', 'OrderApiController@details');
+    Route::get('/driver/{driverId?}/order', 'DriverOrderController@orders')->name('driver.order');
+    Route::post('driver/deliver-order','DriverOrderController@deliverOrder');
+    Route::post('driver/complete-order','DriverOrderController@completeOrder');
+    Route::post('driver/start-deliver','DriverOrderController@startDelivery');
 });

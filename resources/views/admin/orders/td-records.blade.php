@@ -11,7 +11,9 @@
             {{ $record->orderProductAttribute->count() }}
         </button>
          </td>
-    <td> {{$record->order_status }}</td>
+    <td> {{$record->order_status }}
+
+    </td>
     <td> {{  $record->created_at }} </td>
 
 </tr>

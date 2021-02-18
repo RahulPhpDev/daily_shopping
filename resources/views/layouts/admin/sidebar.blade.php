@@ -65,6 +65,11 @@
                     link='admin.order.index'
                     icon="shopping_cart"
                 />
+                <x-admin.navigation
+                    names='Advertisement'
+                    link='admin.advertisement.index'
+                    icon="shopping_cart"
+                />
 {{--        --}}
     </ul>
 </aside>

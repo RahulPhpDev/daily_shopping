@@ -238,7 +238,10 @@
 <script src ="{{ URL::asset('admin-assets/js/customizer.js') }}"/></script>
 <script src ="{{ URL::asset('admin-assets/js/advance-ui-modals.js') }}"/></script>
 <script src ="{{ URL::asset('admin-assets/js/advance-ui-toasts.js') }}"/></script>
+<script src="{{ URL::asset('admin-assets/js/select2.full.min.js') }}"></script>
+
 <script src ="{{ URL::asset('admin-assets/js/form-select2.min.js') }}"/></script>
+
 
 
 

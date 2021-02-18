@@ -50,7 +50,10 @@ Route::group([
         Route::get('location', 'LocationController')->name('location');
         Route::get('unit', 'UnitController')->name('unit');
         Route::get('product/add-more-attribute/{num}', 'ProductController@addMoreAttribute')->name('addMoreAttribute');
-        Route::resource('product', 'ProductController');
+        Route::resources([
+            'product' => ProductController::class,
+            'advertisement' => AdvertisementController::class]
+        );
         Route::resource('attribute', 'AttributeController', ['product_id']);
         Route::get('inventory', 'InventoryController')->name('inventory');
         Route::get('driver/location-options/{type}', 'DriverController@locationOptions');
@@ -59,6 +62,7 @@ Route::group([
         Route::get('driver', 'DriverController@index')->name('driver.index');
 //        Route::get('driver', 'DriverController')->name('driver');
     Route::get('order/items/{orderId}', 'OrderController@items');
+    Route::post('order/assign-driver', 'OrderController@assignDriver')->name('order.assign-driver');
         Route::resource('order', 'OrderController')->except(['create']);
 
 });

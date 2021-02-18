@@ -8,13 +8,18 @@ use App\Models\Order;
 use App\Models\Roles;
 use App\Models\UserLocation;
 use App\Models\Vehicle;
+use App\Models\VehicleOrderAttribute;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use App\Traits\OrderByTrait;
+use DB;
+
+
 class User extends Authenticatable
 {
     use Notifiable,OrderByTrait ;
@@ -49,6 +54,23 @@ class User extends Authenticatable
 
     public function scopeMatchToken($query, $token) {
             return $query->where('remember_token', $token);
+    }
+
+//Location::select(DB::raw( "id,CONCAT(locations.state,' ',locations.city, ' ', locations.code) as name" ))
+//->get()->pluck('name', 'id');
+    public function scopeDriver($query)
+    {
+        return $query->whereHas('roles' , function ($subQuery) {
+            $subQuery->whereRoleId(RoleEnum::Truck_Driver);
+//                ->addSelect(
+//                    [
+//                        'location' => UserLocation::query()->whereColumn('user_id','=','user_role.user_id' )->select(
+//                            DB::raw( "CONCAT(user_location.state,' ',user_location.city, ' ', user_location.code) as location_name")
+//                        )
+//                    ]
+//                );
+        }
+        );
     }
     /**
      * Has Role Admin
@@ -104,5 +126,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Vehicle::class, 'user_vehicles')->withPivot('created_at', 'deleted_at');
     }
 
-
+    /**
+     * @return HasMany
+     */
+    public function vehicleOrder() : HasMany
+    {
+        return $this->hasMany(VehicleOrderAttribute::class);
+    }
 }

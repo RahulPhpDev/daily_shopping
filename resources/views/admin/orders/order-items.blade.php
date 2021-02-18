@@ -8,7 +8,7 @@
             </h5>
         </div>
         <div class="modal-body">
-            <div class="col s12">
+            <div class="col s12 mb-10 mb-10">
                 <table class="responsive-table bordered striped Highlight">
                     <thead class="text-warning">
 
@@ -18,7 +18,7 @@
                     <th > Quantity </th>
                     <th > Price </th>
                     <th> Status </th>
-                    <th> Delivery </th>
+                    <th> Assign Driver </th>
 
 
 
@@ -26,13 +26,22 @@
                     <tbody>
                     @foreach ($records->orderProductAttribute  as $record)
                         <tr>
-                            <td> {{ $record->order_id }}</td>
+                            <td> {{ $record->id }}</td>
                             <td> {{ $record->uuid }}</td>
                             <td> {{ $record->product ? $record->product->name  : '' }}</td>
                             <td> {{ $record->quantity }}</td>
                             <td> {{ $record->price }}</td>
-                            <td> {{ $record->status }}</td>
-                            <td> Delivery</td>
+                            <td> {{ $record->product_attribute_status }}</td>
+                            <td>
+
+                                <select class="browser-default" id = "driver_opt_{{$record->id}}">
+                                    @foreach( $drivers as $key => $value)
+                                        <option value = {{$key}}> {{$value}} </option>
+                                    @endforeach
+                                </select>
+                                <button type = "button" onclick= "assignDriver({{$record->id}}, {{$record->order_id}})"> Assign</button>
+
+                            </td>
                         </tr>
                     @endforeach
 

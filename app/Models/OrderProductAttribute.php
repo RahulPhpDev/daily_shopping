@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\OrderStatusEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
@@ -11,6 +12,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class OrderProductAttribute extends Model
 {
     use SoftDeletes;
+    protected $appends = [
+        'product_attribute_status'
+    ];
 
     protected $fillable = [
         'order_id',
@@ -43,6 +47,13 @@ class OrderProductAttribute extends Model
 
     }
 
+    /**
+     * @return string
+     */
+    public function getProductAttributeStatusAttribute() : string
+    {
+        return array_keys(OrderStatusEnum::status)[$this->status];
+    }
     /**
      * @param $orderProduct
      * @param $data
@@ -87,5 +98,13 @@ class OrderProductAttribute extends Model
                     ProductAttribute::class,
                     'product_id',
                   'id');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function vehicleOrderAttribute() : HasOne
+    {
+     return   $this->hasOne(VehicleOrderAttribute::class, 'order_attribute_id');
     }
 }
