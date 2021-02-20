@@ -10,12 +10,14 @@ class Navigation extends Component
     public $names;
     public $link;
     public $icon;
+    public $activeClass;
 
-    public function __construct($names, $link, $icon)
+    public function __construct($names, $link, $icon,$activeClass = 'active')
     {
         $this->names = $names;
         $this->link = $link;
         $this->icon = $icon;
+        $this->activeClass = $activeClass;
     }
 
     /**

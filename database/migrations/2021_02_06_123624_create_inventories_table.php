@@ -21,7 +21,7 @@ class CreateInventoriesTable extends Migration
             $table->foreign('product_attribute_id')->references('id')->on('product_attributes')->onDelete('cascade');
             $table->string('quantity', 10)->default(null);
             $table->softDeletes();
-            $table->timestamp('created_at');
+            $table->timestamp('created_at')->default(now());
         });
     }
 
