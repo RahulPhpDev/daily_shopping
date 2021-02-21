@@ -19,7 +19,7 @@ class CreateOrderProductDeliveriesTable extends Migration
             $table->unsignedBigInteger('order_product_attribute_id');
 //            $table->foreign('order_product_attribute_id')->on('order_products')->references('id')->onDelete('cascade');
             $table->tinyInteger('type')->default(0);
-            $table->json('timing')->nullable();
+            $table->longText('timing')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
