@@ -55,13 +55,6 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    /**
-     * @return BelongsToMany
-     */
-//    public function images() : BelongsToMany
-//    {
-//        return $this->belongsToMany(Image::class);
-//    }
 
     /**
      * @return HasMany
@@ -69,6 +62,14 @@ class Product extends Model
     public function attributes() : HasMany
     {
         return $this->hasMany(ProductAttribute::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function image() : \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
+        return $this->morphMany(Image::class, 'image');
     }
 
 }

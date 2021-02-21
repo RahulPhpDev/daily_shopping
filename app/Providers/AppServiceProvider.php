@@ -10,6 +10,7 @@ use App\User;
 use App\View\Components\Admin\PageHead;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -34,5 +35,10 @@ class AppServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         Product::observe( ProductObserver::class );
         JsonResource::withoutWrapping();
+
+        Relation::morphMap([
+           'product' => 'App\Models\Product',
+           'productAttribute' => 'App\Models\ProductAttribute'
+        ]);
     }
 }

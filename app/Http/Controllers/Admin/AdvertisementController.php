@@ -40,17 +40,29 @@ class AdvertisementController extends Controller
      */
     public function store(Request $request)
     {
-//        $request->validate([
-//            'file' => ['required']
-//        ]);
+//        50, 0000 => 50 mb
+        $request->validate([
+            'name' => 'required|max:100|min:1',
+            'file' => ['file',
+                        'required',
+                        'mimes:jpg,bmp,png,mp4,,ogx,oga,ogv,ogg,webm',
+                         'max:200000'
+                    ]
+        ]);
+        $type = 2;
+        if (false !== mb_strpos($request->file->getMimeType(), "image"))
+        {
+            $type = 1;
+        }
         $fileNameExt = $request->file('file')->getClientOriginalName();
         $fileName = pathinfo($fileNameExt, PATHINFO_FILENAME);
         $extension = $request->file('file')->getClientOriginalExtension();
         $fileToStore = $fileName.'_'.time().'.'.$extension;
         $path = $request->file('file')->storeAs('public/advertisement', $fileToStore);
         Advertisement::create([
-            'type' => 1,
-            'url' =>'public/advertisement/'.$fileToStore,
+            'name' => $request->name,
+            'type' => $type,
+            'url' =>'advertisement/'.$fileToStore,
         ]);
         return redirect()->route('admin.advertisement.index');
     }
@@ -69,10 +81,10 @@ class AdvertisementController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\odel  $odel
+     * @param  \App\Models\Advertisement  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(odel $odel)
+    public function edit(Advertisement $id)
     {
         //
     }
@@ -84,7 +96,7 @@ class AdvertisementController extends Controller
      * @param  \App\odel  $odel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, odel $odel)
+    public function update(Request $request, Advertisement $id)
     {
         //
     }
@@ -92,11 +104,12 @@ class AdvertisementController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\odel  $odel
+     * @param  \App\Models\Advertisement  $advertisement
      * @return \Illuminate\Http\Response
      */
-    public function destroy(odel $odel)
+    public function destroy(Advertisement $advertisement)
     {
-        //
+        $advertisement->delete();
+        return redirect()->route('admin.advertisement.index');
     }
 }

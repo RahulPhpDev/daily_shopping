@@ -14,6 +14,7 @@ use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use mysql_xdevapi\Exception;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -24,8 +25,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $records = Product::with('brand','unit' , 'category')
+        $records = Product::with('brand','unit' , 'category','image')
+                            ->withCount('attributes')
                             ->paginate(PaginationEnum::Show10Records);
+//        dd($records[1]->image);
         return view('admin/product/index', compact('records'));
     }
 
@@ -60,14 +63,35 @@ class ProductController extends Controller
         DB::beginTransaction();
 
         try {
+
             $product = Product::create(
                 $request->only(
                     array_keys($request->productValidation()
                     ))
             );
+
+            if ($request->hasFile('product_image')) {
+                //  Let's do everything here
+                if ($request->file('product_image')->isValid()) {
+                    $validated = $request->validate([
+                        'product_image' => 'mimes:jpeg,png|max:4014',
+                    ]);
+                    $productImage = $request->product_image;
+                    $extension = $productImage->extension();
+                    $fullFileName = $productImage->getClientOriginalName().'_'.$product->id.".".$extension;
+
+                    $productImage
+                        ->storeAs("/public/product/$product->id/",$fullFileName);
+                    $url = Storage::url("product/$product->id/".$fullFileName);
+                    $product->image()->create([
+                        'src' => $url
+                    ]);
+                }
+            }
             $rec = $request->only(
                 array_keys($request->attributeValidation()
                 )) ;
+
           for ($i = 0; $i < $rec['count_times']; $i++)
           {
 
@@ -75,11 +99,31 @@ class ProductController extends Controller
                   new ProductAttribute([
                       'brand_id' => $rec['brand_id']['*'][$i],
                       'attribute_name' => $rec['attribute']['*'][$i],
-//                 'quantity' => $rec['quantity']['*'][$i],
                       'buying_price' => $rec['buying_price']['*'][$i],
                       'selling_price' => $rec['selling_price']['*'][$i],
                   ])
               );
+
+
+              if ($request->hasFile("attribute_image.".$i)) {
+                  //  Let's do everything here
+                  if ($request->file('attribute_image.'.$i)->isValid()) {
+                      $validated = $request->validate([
+                          "attribute_image.$i" => 'mimes:jpeg,png|max:4014',
+                      ]);
+                      $productAttributeImage = $request->attribute_image[$i];
+                      $extension = $productAttributeImage->extension();
+                      $fullFileName = $productAttributeImage->getClientOriginalName().'_'.$attribute->id.".".$extension;
+
+                      $productAttributeImage
+                          ->storeAs("/public/product/$product->id/",$fullFileName);
+                      $url = Storage::url("product/$product->id/".$fullFileName);
+                      $attribute->image()->create([
+                          'src' => $url
+                      ]);
+                  }
+              }
+
 
               $attribute->inventory()->save(
                   new Inventory(
@@ -94,7 +138,7 @@ class ProductController extends Controller
         } catch ( Exception $exception)
         {
             DB::rollBack();
-            dd($exception);
+//            dd($exception);
         }
     }
 

@@ -16,7 +16,7 @@
                         @component('partials.th',
                                     [
                                         'tableHeads' =>
-                                            ['ID', 'Name', 'Category', 'Unit' ,'Inventory','Action']
+                                            ['ID', 'Name', 'Category','Image', 'Unit' ,'Inventory', 'Attribute','Action']
                                     ])
                         @endcomponent
 

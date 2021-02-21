@@ -13,7 +13,10 @@ use App\Models\ProductAttribute;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use mysql_xdevapi\Exception;
+use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
+use App\Http\Requests\Admin\ProductAttributeRequest;
+use Illuminate\Support\Facades\Storage;
 
 class AttributeController extends Controller
 {
@@ -21,20 +24,16 @@ class AttributeController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @param int $product_id
+     * @return View
      */
-    public function index(Request $request)
+    public function index(int $product_id) :View
     {
 
-    if (!$product_id = $request->get('product_id'))
-    {
-        abort('not found');
-    }
        $records = ProductAttribute::
-                with('brand','inventory', 'product')
-                ->where('product_id', $request->get('product_id'))
+                with('brand','inventory', 'product', 'image')
+                ->where('product_id', $product_id)
                 ->paginate(PaginationEnum::Show10Records);
-//       dd($records);
        $product = Product::select('id', 'name')->findOrFail($product_id);
       return view('admin.product-attribute.index', compact('records', 'product'));
     }
@@ -42,11 +41,14 @@ class AttributeController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return  \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @param int $product_id
+     * @return  View
      */
-    public function create()
+    public function create( int $product_id) :View
     {
-
+        $product = Product::select('id', 'name')->findOrFail($product_id);
+        $brands = Brand::pluck('name', 'id')->prepend('', 'Select Brand');
+        return view('admin.product-attribute.create', compact('brands','product','product_id'));
     }
 
     /**
@@ -55,8 +57,55 @@ class AttributeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductRequest $request)
+    public function store(ProductAttributeRequest $request, int $product_id)
     {
+        DB::beginTransaction();
+        try {
+            $product = Product::findOrFail($product_id);
+            for ($i =1; $i <= $request['count_times']; $i++) {
+
+                $attribute = $product->attributes()->save(
+                    new ProductAttribute([
+                        'brand_id' => $request['brand_id'][$i],
+                        'attribute_name' => $request['attribute'][$i],
+                        'buying_price' => $request['buying_price'][$i],
+                        'selling_price' => $request['selling_price'][$i],
+                    ])
+                );
+                if ($request->hasFile("attribute_image.".$i)) {
+                    //  Let's do everything here
+                    if ($request->file('attribute_image.'.$i)->isValid()) {
+                        $validated = $request->validate([
+                            "attribute_image.$i" => 'mimes:jpeg,png|max:4014',
+                        ]);
+                        $productAttributeImage = $request->attribute_image[$i];
+                        $extension = $productAttributeImage->extension();
+                        $fullFileName = $productAttributeImage->getClientOriginalName().'_'.$attribute->id.".".$extension;
+
+                        $productAttributeImage
+                            ->storeAs("/public/product/$product_id/",$fullFileName);
+                        $url = Storage::url("product/$product_id/".$fullFileName);
+                        $attribute->image()->create([
+                            'src' => $url
+                        ]);
+                    }
+                }
+
+
+                $attribute->inventory()->save(
+                    new Inventory(
+                        [
+                            'quantity' => $request['quantity'][$i],
+                        ]
+                    )
+                );
+            }
+            DB::commit();
+            return redirect()->route('admin.attribute.index', [$product_id]);
+        }catch ( Exception $exception)
+        {
+            DB::rollBack();
+        }
     }
 
     /**
@@ -101,7 +150,9 @@ class AttributeController extends Controller
      */
     public function destroy(int $id)
     {
-
+        ProductAttribute::destroy($id);
+        Session::flash('success','attribute deleted');
+        return redirect()->route('admin.product.index');
     }
 
 }

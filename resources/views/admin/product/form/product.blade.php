@@ -42,6 +42,21 @@
                         @enderror
                     </div>
 
+                    <div class="col m4 s12 file-field input-field">
+                        <div class="btn float-right">
+                            <span>File</span>
+                            <input type="file" name="product_image">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                        @error('product_image')
+                        <span class="text-danger">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                    </div>
+
                 </div>
         </div>
     </div>

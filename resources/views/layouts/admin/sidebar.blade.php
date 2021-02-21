@@ -13,7 +13,7 @@
                     names='User'
                     link='admin.user'
                     icon="accessibility"
-                    activeClass="{{ request()->routeIs('admin.user.*') ? 'active' : '' }}"
+                    activeClass="{{ request()->routeIs('admin.user') || request()->routeIs('admin.user.*') ? 'active' : '' }}"
                 />
                 <x-admin.navigation
                     names='Driver'
@@ -25,7 +25,7 @@
                         names='Category'
                         link='admin.category'
                         icon="category"
-                        activeClass="{{ request()->routeIs('admin.category.*') ? 'active' : '' }}"
+                        activeClass="{{ request()->routeIs('admin.category') || request()->routeIs('admin.category.*') ? 'active' : '' }}"
                     />
                     <x-admin.navigation
                         names='Brand'
@@ -43,20 +43,20 @@
                         names='Vehicle Type'
                         link='admin.vehicle-type'
                         icon="library_books"
-                        activeClass="{{ request()->routeIs('admin.vehicle-type.*') ? 'active' : '' }}"
+                        activeClass="{{ request()->routeIs('admin.vehicle-type') || request()->routeIs('admin.vehicle-type.*') ? 'active' : '' }}"
                     />
 
                     <x-admin.navigation
                         names='Vehicle'
                         link='admin.vehicle'
                         icon="directions_bus"
-                        activeClass="{{ request()->routeIs('admin.vehicle.*') ? 'active' : '' }}"
+                        activeClass="{{ request()->routeIs('admin.vehicle') || request()->routeIs('admin.vehicle.*') ? 'active' : '' }}"
                     />
                 <x-admin.navigation
                     names='Location'
                     link='admin.location'
                     icon="add_location"
-                    activeClass="{{ request()->routeIs('admin.location.*') ? 'active' : '' }}"
+                    activeClass="{{ request()->routeIs('admin.location') ||  request()->routeIs('admin.location.*') ? 'active' : '' }}"
                 />
                   <x-admin.navigation
                     names='Product'
@@ -68,7 +68,7 @@
                     names='Inventory'
                     link='admin.inventory'
                     icon="inventory"
-                    activeClass="{{ request()->routeIs('admin.inventory.*') ? 'active' : '' }}"
+                    activeClass="{{ request()->routeIs('admin.inventory') ? 'active' : '' }}"
                 />
                 <x-admin.navigation
                     names='Order'

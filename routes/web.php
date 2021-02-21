@@ -54,15 +54,20 @@ Route::group([
             'product' => ProductController::class,
             'advertisement' => AdvertisementController::class]
         );
-        Route::resource('attribute', 'AttributeController', ['product_id']);
+    Route::get('attribute/{product_id}','AttributeController@index')->name('attribute.index');
+    Route::get('attribute/{product_id}/create','AttributeController@create')->name('attribute.create');
+    Route::post('attribute/{product_id}/store','AttributeController@store')->name('attribute.store');
+    Route::delete('attribute/{id}/destroy','AttributeController@destroy')->name('attribute.destroy');
+//        Route::resource('attribute', 'AttributeController', ['{product_id}']);o
+
         Route::get('inventory', 'InventoryController')->name('inventory');
         Route::get('driver/location-options/{type}', 'DriverController@locationOptions');
         Route::get('driver/{userId}/create', 'DriverController@create')->name('driver.location.create');
         Route::post('driver/{userId}/store', 'DriverController@store')->name('driver.location.store');
         Route::get('driver', 'DriverController@index')->name('driver.index');
 //        Route::get('driver', 'DriverController')->name('driver');
-    Route::get('order/items/{orderId}', 'OrderController@items');
-    Route::post('order/assign-driver', 'OrderController@assignDriver')->name('order.assign-driver');
+        Route::get('order/items/{orderId}', 'OrderController@items');
+        Route::post('order/assign-driver', 'OrderController@assignDriver')->name('order.assign-driver');
         Route::resource('order', 'OrderController')->except(['create']);
 
 });
