@@ -13,13 +13,18 @@ class ProductApiController extends Controller
 {
   public function index()
   {
-        return new ProductCollection( Product::without('category')->paginate(2) );
+        return new ProductCollection(
+                Product::with('image', 'brand','attributes')
+                    ->without('category')->paginate(PaginationEnum::Show10Records)
+        );
   }
 
 
   public function categoryProduct($category_id)
   {
-      return  CategoryProductResource::collection(Product::where('category_id', $category_id)->paginate(PaginationEnum::Show10Records));
+      return  CategoryProductResource::collection(
+                        Product::where('category_id', $category_id
+                    )->paginate(PaginationEnum::Show10Records));
   }
 
 

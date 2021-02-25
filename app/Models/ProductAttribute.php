@@ -13,8 +13,11 @@ class ProductAttribute extends Model
 {
     use SoftDeletes ,OrderByTrait;
 
-    protected $fillable = ['brand_id','product_id','attribute_name','buying_price', 'selling_price'];
+    protected $fillable = ['brand_id','product_id','attribute_name','buying_price', 'selling_price', 'is_popular'];
 
+    protected $casts = [
+        'is_popular' => 'boolean'
+    ];
     public $timestamps = false;
 
 

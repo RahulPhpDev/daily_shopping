@@ -91,16 +91,15 @@ class ProductController extends Controller
             $rec = $request->only(
                 array_keys($request->attributeValidation()
                 )) ;
-
           for ($i = 0; $i < $rec['count_times']; $i++)
           {
-
               $attribute =  $product->attributes()->save(
                   new ProductAttribute([
                       'brand_id' => $rec['brand_id']['*'][$i],
                       'attribute_name' => $rec['attribute']['*'][$i],
                       'buying_price' => $rec['buying_price']['*'][$i],
                       'selling_price' => $rec['selling_price']['*'][$i],
+                      'is_popular' => isset($rec['is_popular']['*'][$i])  ? $rec['is_popular']['*'][$i] || false : false,
                   ])
               );
 

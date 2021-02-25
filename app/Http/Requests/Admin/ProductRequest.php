@@ -46,7 +46,8 @@ class ProductRequest extends FormRequest
             'quantity.*' => 'required',
             'buying_price.*' => 'required',
             'selling_price.*' => 'required',
-            'count_times' => 'required'
+            'count_times' => 'required',
+            'is_popular.*' => 'sometimes|nullable'
         ];
     }
 

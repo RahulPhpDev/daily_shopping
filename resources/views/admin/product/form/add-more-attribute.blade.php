@@ -48,6 +48,17 @@
             @enderror
         </div>
 
+
+        <div class="input-field col m3 s12">
+            <input id="buying_price" name ="buying_price[1]" type="text">
+            <label for="buying_price"> Buying Price </label>
+            @error('buying_price.1')
+            <span class="text-danger">
+                                {{ $message }}
+                            </span>
+            @enderror
+        </div>
+
         <div class="input-field col m4 s12">
             <input id="selling_price" name ="selling_price[{{$num}}]" type="text">
             <label for="selling_price"> Selling Price </label>
@@ -59,6 +70,14 @@
         </div>
 
         <div class="input-field col m4 s12 file-field">
+            <div class="input-field col m3 s12">
+                <div>
+
+                    <label for="check">Is Popular</label>
+                    <input type="checkbox" id="check" value ="1" name ="is_popular[{{$num}}]" style="opacity: 1"><br/>
+                </div>
+            </div>
+
             <div class="btn float-right">
                 <span>Attribute Image</span>
                 <input type="file" name="attribute_image[{{$num}}]">

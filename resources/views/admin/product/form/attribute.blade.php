@@ -23,7 +23,7 @@
                     </div>
 
                     <div class="input-field col m4 s12">
-                        <input id="attribute" name ="attribute[1]" type="text">
+                        <input id="attribute" name ="attribute[1]" type="text" >
                         <label for="attribute"> Attribute </label>
 
                         @error('attribute.1')
@@ -49,7 +49,7 @@
                     <div>
 
                         <label for="check">Is Popular</label>
-                        <input type="checkbox" id="check"  name ="is_popular[1]" style="opacity: 1"><br/>
+                        <input type="checkbox" id="check" value ="1" name ="is_popular[1]" style="opacity: 1"><br/>
                     </div>
                 </div>
                 <div class="input-field col m3 s12">

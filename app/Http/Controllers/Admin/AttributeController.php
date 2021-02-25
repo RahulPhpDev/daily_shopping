@@ -70,6 +70,7 @@ class AttributeController extends Controller
                         'attribute_name' => $request['attribute'][$i],
                         'buying_price' => $request['buying_price'][$i],
                         'selling_price' => $request['selling_price'][$i],
+                        'is_popular' => $request['is_popular'][$i] || false,
                     ])
                 );
                 if ($request->hasFile("attribute_image.".$i)) {

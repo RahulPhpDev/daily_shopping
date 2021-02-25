@@ -18,7 +18,21 @@ class ProductCollection extends ResourceCollection
         return [
             'code' => 200,
             'status' => 'success',
-            'products' => $this->collection,
+            'products' => $this->productCollection() ,
         ];
+    }
+
+
+    private function productCollection()
+    {
+       return $this->collection->map( function ($value) {
+           return [
+               'id' => $value->id,
+               'name' => $value->name,
+               'uuid' => $value->uuid,
+               'image' => optional($value->image->first())->src,
+               'item' => ProductAttributeResource::collection($value->attributes)
+           ];
+        });
     }
 }
