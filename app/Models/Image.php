@@ -25,6 +25,6 @@ class Image extends Model
 
     public function getSrcAttribute($value)
     {
-       return App::environment('staging') ?  '/public'.$value : $value;
+       return App::environment('prod') ?  '/public'.$value : $value;
     }
 }
