@@ -1,3 +1,4 @@
+
 <div class="col s12 m12 l12">
     <div id="inline-form" class="card card card-default scrollspy">
         <div class="card-content">
@@ -44,8 +45,14 @@
                 </div>
 
             <div class="row">
+                <div class="input-field col m3 s12">
+                    <div>
 
-                <div class="input-field col m4 s12">
+                        <label for="check">Is Popular</label>
+                        <input type="checkbox" id="check"  name ="is_popular[1]" style="opacity: 1"><br/>
+                    </div>
+                </div>
+                <div class="input-field col m3 s12">
                     <input id="buying_price" name ="buying_price[1]" type="text">
                     <label for="buying_price"> Buying Price </label>
                     @error('buying_price.1')
@@ -55,7 +62,7 @@
                     @enderror
                 </div>
 
-                <div class="input-field col m4 s12">
+                <div class="input-field col m3 s12">
                     <input id="selling_price" name ="selling_price[1]" type="text">
                     <label for="selling_price"> Selling Price </label>
                     @error('selling_price.1')
@@ -64,8 +71,7 @@
                             </span>
                     @enderror
                 </div>
-                <div class="input-field col m4 s12 file-field"></div>
-                <div class="input-field col m4 s12 file-field">
+                <div class="input-field col m3 s12 file-field">
                     <div class="btn float-right">
                         <span>Attribute Image</span>
                         <input type="file" name="attribute_image[1]">
@@ -74,6 +80,9 @@
                         <input class="file-path validate" type="text">
                     </div>
                 </div>
+
+
+
                 <div id ="append_attribute">
                     <!-- here will goes the append records !-->
                 </div>

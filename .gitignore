@@ -11,3 +11,10 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 /stubs
+.idea/daily_shopping.iml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/workspace.xml
+.idea/phpunit.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/
