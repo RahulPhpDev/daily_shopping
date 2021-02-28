@@ -67,7 +67,7 @@
                 },
                 data: {
                     order_id:orderId,
-                    order_attribute_id:attributeId,
+                    order_product_id:attributeId,
                     user_id: driverId
                 },
                 success:function(data) {

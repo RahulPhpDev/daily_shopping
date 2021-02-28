@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\OrderByTrait;
 use Illuminate\Database\Eloquent\Model;
-
-class VehicleOrderAttribute extends Model
+class VehicleOrderProduct extends Model
 {
-    protected $fillable = ['order_attribute_id','user_id'];
+use OrderByTrait;
+
+    protected $table = 'vehicle_order_product';
+
+    protected $fillable = ['order_product_id','user_id'];
 
 
 //    public function order() // wrong naming convension need to refacotr

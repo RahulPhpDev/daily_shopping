@@ -10,7 +10,7 @@ class OrderProductDelivery extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'order_product_attribute_id',
+        'order_product_id',
         'type',
         'timing'
     ];

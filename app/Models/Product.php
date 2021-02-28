@@ -40,6 +40,10 @@ class Product extends Model
       });
     }
 
+    public function scopePopular($query)
+    {
+        return $query->where('is_popular', 1);
+    }
     /**
      * @return BelongsTo
      */

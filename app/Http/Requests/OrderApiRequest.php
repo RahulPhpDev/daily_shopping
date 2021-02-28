@@ -54,7 +54,7 @@ class OrderApiRequest extends FormRequest
         return [
             'category_id.*' => 'required',
             'product_id.*' => 'required',
-            'attribute_id.*' => 'required',
+//            'attribute_id.*' => 'required',
             'quantity.*' => 'required',
             'delivery_type.*' => 'required',
             'delivery_days.*' => 'required',

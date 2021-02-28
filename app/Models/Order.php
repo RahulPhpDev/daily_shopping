@@ -75,12 +75,14 @@ class Order extends Model
         );
     }
 
+
+
     /**
      * @return HasMany
      */
-    public function orderProductAttribute() : HasMany
+    public function orderProduct() : HasMany
     {
-        return $this->hasMany(OrderProductAttribute::class);
+        return $this->hasMany(OrderProduct::class);
     }
 
     /**

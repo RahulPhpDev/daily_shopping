@@ -8,7 +8,7 @@
             class="modal-trigger waves-effect  waves-light btn gradient-45deg-light-blue-cyan z-depth-3  mr-3"
             href="#createModal"
             onClick = "showAttribute({{$record->id}})" type="button" >
-            {{ $record->orderProductAttribute->count() }}
+            {{ $record->orderProduct->count() }}
         </button>
          </td>
     <td> {{$record->order_status }}

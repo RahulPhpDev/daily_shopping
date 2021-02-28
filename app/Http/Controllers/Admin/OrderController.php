@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\OrderProduct;
 use App\Models\OrderProductAttribute;
 use App\User;
 use Illuminate\Http\Request;
@@ -20,10 +21,10 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $records = Order::with('user','orderProductAttribute')->paginate(10);
-     return view('admin.orders.index', [
-         'records' => $records
-     ]);
+        $records = Order::with('user','orderProduct')->paginate(10);
+         return view('admin.orders.index', [
+             'records' => $records
+         ]);
     }
 
     /**
@@ -77,10 +78,9 @@ class OrderController extends Controller
      */
     public function items($orderId) : View
     {
-        $records = Order::with('orderProductAttribute',
-                'orderProductAttribute.product',
-                'orderProductAttribute.orderAttributeDelivery',
-                'orderProductAttribute.productAttribute'
+        $records = Order::with('orderProduct',
+                'orderProduct.orderProductDelivery',
+                'orderProduct.product'
             )->find($orderId);
         $drivers = User::driver()->pluck('name', 'id') ->prepend('Select Option', 0);
         return view('admin.orders.order-items', compact('records', 'drivers'));
@@ -92,12 +92,12 @@ class OrderController extends Controller
         $validator = Validator::make($request->all(), [
             'user_id' => 'required',
             'order_id' => 'required',
-            'order_attribute_id' => 'required',
+            'order_product_id' => 'required',
         ]);
         if ($validator->fails()) {
             return response('something is missing')->status(403);
         }
-        OrderProductAttribute::findOrFail($request->order_attribute_id)->vehicleOrderAttribute()->updateOrCreate( [
+        OrderProduct::findOrFail($request->order_product_id)->vehicleOrderProduct()->updateOrCreate( [
             'user_id' => $request->user_id
         ]);
         return response('approved')->status(202);

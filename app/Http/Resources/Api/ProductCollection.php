@@ -31,7 +31,10 @@ class ProductCollection extends ResourceCollection
                'name' => $value->name,
                'uuid' => $value->uuid,
                'image' => optional($value->image->first())->src,
-               'item' => ProductAttributeResource::collection($value->attributes)
+               'buying_price' => $value->buying_price,
+               'selling_price' => $value->selling_price,
+               'is_popular' => $value->is_popular
+//               'item' => ProductAttributeResource::collection($value->attributes)
            ];
         });
     }

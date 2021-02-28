@@ -14,8 +14,8 @@ class ProductApiController extends Controller
   public function index()
   {
         return new ProductCollection(
-                Product::with('image', 'brand','attributes')
-                    ->without('category')->paginate(PaginationEnum::Show10prRecords)
+                Product::with('image', 'brand')
+                    ->without('category')->paginate(PaginationEnum::Show10Records)
         );
   }
 
@@ -25,6 +25,18 @@ class ProductApiController extends Controller
       return  CategoryProductResource::collection(
                         Product::where('category_id', $category_id
                     )->paginate(PaginationEnum::Show10Records));
+  }
+
+    /**
+     * @return ProductCollection
+     */
+  public function popularProduct() : ProductCollection
+  {
+      return new ProductCollection(
+          Product::popular()->with('image', 'brand')
+              ->without('category')
+              ->paginate(PaginationEnum::Show10Records)
+      );
   }
 
 

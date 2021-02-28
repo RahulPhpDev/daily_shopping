@@ -7,6 +7,7 @@ use App\Http\Requests\OrderApiRequest;
 use App\Http\Resources\Api\UserOrderResource;
 use App\Models\Location;
 use App\Models\Order;
+use App\Models\OrderProduct;
 use App\Models\OrderProductAttribute;
 use App\Models\ProductAttribute;
 use App\Models\UserLocation;
@@ -21,14 +22,13 @@ class OrderApiController extends Controller
    public function index( Request $request,int $userId )
    {
         $orders = Order::
-            with('')
+            with('orderProduct', 'orderProduct.product')
             ->whereUserId($userId)->get();
         return response($orders, 200);
    }
 
    public function create(OrderApiRequest $request)
    {
-
        try {
            DB::beginTransaction();
            $userId = 2;
@@ -45,12 +45,19 @@ class OrderApiController extends Controller
                     'status' => 0
                 ]
             );
-           OrderProductAttribute::saveRecord(
+
+           OrderProduct::saveRecord(
                array_merge(
                    [ 'order_id' => $orderData->id ],
                    $request->only($request->getValidateAttributeKeys())
                )
            );
+//           OrderProductAttribute::saveRecord(
+//               array_merge(
+//                   [ 'order_id' => $orderData->id ],
+//                   $request->only($request->getValidateAttributeKeys())
+//               )
+//           );
            DB::commit();
 //    @todo may be send an email
        }
@@ -63,7 +70,7 @@ class OrderApiController extends Controller
 
            return response('error found', $d->getCode());
        }
-    dd('udd ja');
+       return response('order successfully placed');
    }
 
 

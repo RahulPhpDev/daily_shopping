@@ -35,6 +35,7 @@ Route::group([
     Route::post('login', 'LoginApiController')->withoutMiddleware('apiToken');
     Route::get('categories', 'CategoryApiController@index');
     Route::get('products','ProductApiController@index');
+    Route::get('popular/products','ProductApiController@popularProduct');
     Route::get('category/{category_id}/products', 'ProductApiController@categoryProduct');
     Route::put('update/profile', 'ProfileApiController@updateProfile');
     Route::get('order/{user_id}', 'OrderApiController@index');
@@ -44,4 +45,7 @@ Route::group([
     Route::post('driver/deliver-order','DriverOrderController@deliverOrder');
     Route::post('driver/complete-order','DriverOrderController@completeOrder');
     Route::post('driver/start-deliver','DriverOrderController@startDelivery');
+
+    //subscription
+    Route::post('subscription/store', 'SubscriptionApiController@store')->name('subscription.store');
 });

@@ -8,7 +8,7 @@ use App\Models\Order;
 use App\Models\Roles;
 use App\Models\UserLocation;
 use App\Models\Vehicle;
-use App\Models\VehicleOrderAttribute;
+use App\Models\VehicleOrderProduct;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -131,6 +131,6 @@ class User extends Authenticatable
      */
     public function vehicleOrder() : HasMany
     {
-        return $this->hasMany(VehicleOrderAttribute::class);
+        return $this->hasMany(VehicleOrderProduct::class);
     }
 }

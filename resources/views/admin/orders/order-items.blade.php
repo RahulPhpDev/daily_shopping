@@ -24,14 +24,14 @@
 
                     </thead>
                     <tbody>
-                    @foreach ($records->orderProductAttribute  as $record)
+                    @foreach ($records->orderProduct  as $record)
                         <tr>
                             <td> {{ $record->id }}</td>
                             <td> {{ $record->uuid }}</td>
                             <td> {{ $record->product ? $record->product->name  : '' }}</td>
                             <td> {{ $record->quantity }}</td>
                             <td> {{ $record->price }}</td>
-                            <td> {{ $record->product_attribute_status }}</td>
+                            <td> {{ $record->product_status }}</td>
                             <td>
 
                                 <select class="browser-default" id = "driver_opt_{{$record->id}}">
