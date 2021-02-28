@@ -26,9 +26,7 @@ class ProductController extends Controller
     public function index()
     {
         $records = Product::with('brand','unit' , 'category','image')
-                            ->withCount('attributes')
                             ->paginate(PaginationEnum::Show10Records);
-//        dd($records[1]->image);
         return view('admin/product/index', compact('records'));
     }
 
@@ -49,8 +47,11 @@ class ProductController extends Controller
     public function addMoreAttribute($num)
     {
         $brands = Brand::pluck('name', 'id')->prepend('', 'Select Brand');
-        return view ('admin.product.form.add-more-attribute', compact('brands', 'num'));
+        $unites = Unit::pluck('name', 'id')->prepend('', 'Select Unit');
+        $categories = Category::pluck('name', 'id')->prepend(' ', 'Select Category');
+        return view ('admin.product.form.add-more-product', compact('brands', 'unites', 'categories', 'num'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -61,79 +62,53 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         DB::beginTransaction();
-
         try {
-
-            $product = Product::create(
-                $request->only(
-                    array_keys($request->productValidation()
-                    ))
-            );
-
-            if ($request->hasFile('product_image')) {
-                //  Let's do everything here
-                if ($request->file('product_image')->isValid()) {
-                    $validated = $request->validate([
-                        'product_image' => 'mimes:jpeg,png|max:4014',
-                    ]);
-                    $productImage = $request->product_image;
-                    $extension = $productImage->extension();
-                    $fullFileName = $productImage->getClientOriginalName().'_'.$product->id.".".$extension;
-
-                    $productImage
-                        ->storeAs("/public/product/$product->id/",$fullFileName);
-                    $url = Storage::url("product/$product->id/".$fullFileName);
-                    $product->image()->create([
-                        'src' => $url
-                    ]);
-                }
-            }
             $rec = $request->only(
-                array_keys($request->attributeValidation()
+                array_keys($request->productValidation()
                 )) ;
-          for ($i = 0; $i < $rec['count_times']; $i++)
-          {
-              $attribute =  $product->attributes()->save(
-                  new ProductAttribute([
-                      'brand_id' => $rec['brand_id']['*'][$i],
-                      'attribute_name' => $rec['attribute']['*'][$i],
-                      'buying_price' => $rec['buying_price']['*'][$i],
-                      'selling_price' => $rec['selling_price']['*'][$i],
-                      'is_popular' => isset($rec['is_popular']['*'][$i])  ? $rec['is_popular']['*'][$i] || false : false,
-                  ])
-              );
+            for ($i = 0; $i < $rec['count_times']; $i++)
+            {
+               $data = [
+                    'name' =>  $rec['name']['*'][$i],
+                    'unit_id' =>  $rec['unit_id']['*'][$i],
+                    'category_id' =>  $rec['category_id']['*'][$i],
+                    'brand_id' => $rec['brand_id']['*'][$i],
+                    'name' => $rec['name']['*'][$i],
+                    'buying_price' => $rec['buying_price']['*'][$i],
+                    'selling_price' => $rec['selling_price']['*'][$i],
+                    'is_popular' => isset($rec['is_popular']['*'][$i])  ? $rec['is_popular']['*'][$i] || false : false,
+                ];
+               $product = Product::create($data);
+               $newC = $i + 1;
+                if ($request->hasFile("product_image")
+                    && $request->file('product_image.'.$newC)->isValid()
+                ) {
+                        $validated = $request->validate([
+                            "product_image.$newC" => 'mimes:jpeg,png,jpg|max:4014',
+                        ]);
+                        $productImage = $request->product_image[$newC];
+                        $extension = $productImage->extension();
+                        $fullFileName = $productImage->getClientOriginalName().'_'.$product->id.".".$extension;
 
+                        $productImage
+                            ->storeAs("/public/product/$product->id/",$fullFileName);
+                        $url = Storage::url("product/$product->id/".$fullFileName);
+                        $product->image()->create([
+                            'src' => $url
+                        ]);
 
-              if ($request->hasFile("attribute_image.".$i)) {
-                  //  Let's do everything here
-                  if ($request->file('attribute_image.'.$i)->isValid()) {
-                      $validated = $request->validate([
-                          "attribute_image.$i" => 'mimes:jpeg,png|max:4014',
-                      ]);
-                      $productAttributeImage = $request->attribute_image[$i];
-                      $extension = $productAttributeImage->extension();
-                      $fullFileName = $productAttributeImage->getClientOriginalName().'_'.$attribute->id.".".$extension;
+                }
 
-                      $productAttributeImage
-                          ->storeAs("/public/product/$product->id/",$fullFileName);
-                      $url = Storage::url("product/$product->id/".$fullFileName);
-                      $attribute->image()->create([
-                          'src' => $url
-                      ]);
-                  }
-              }
-
-
-              $attribute->inventory()->save(
-                  new Inventory(
-                      [
-                          'quantity' => $rec['quantity']['*'][$i],
-                      ]
-                  )
-              );
-          }
+                $product->inventory()->save(
+                    new Inventory(
+                        [
+                            'quantity' => $rec['quantity']['*'][$i],
+                        ]
+                    )
+                );
+            }
             DB::commit();
-          return redirect()->route('admin.product.index');
+            return redirect()->route('admin.product.index');
         } catch ( Exception $exception)
         {
             DB::rollBack();

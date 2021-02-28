@@ -26,16 +26,16 @@ class Inventory extends Model
         return Carbon::parse($date)->format('d-M-Y');
     }
 
-    public function productAttribute() : BelongsTo
+    public function product() : BelongsTo
     {
-        return $this->belongsTo(ProductAttribute::class);
+        return $this->belongsTo(Product::class);
     }
     /**
      * @return  HasManyThrough
      */
-    public function product() : HasManyThrough
-    {
-        return $this->hasManyThrough(Product::class, ProductAttribute::class );
-    }
+//    public function product() : HasManyThrough
+//    {
+//        return $this->hasManyThrough(Product::class, Product::class );
+//    }
 
 }

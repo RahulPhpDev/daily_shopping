@@ -16,8 +16,8 @@ class CreateOrderProductDeliveriesTable extends Migration
         Schema::dropIfExists('order_product_deliveries');
         Schema::create('order_product_deliveries', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('order_product_attribute_id');
-//            $table->foreign('order_product_attribute_id')->on('order_products')->references('id')->onDelete('cascade');
+            $table->unsignedBigInteger('order_product_id');
+            $table->foreign('order_product_id')->on('order_products')->references('id')->onDelete('cascade');
             $table->tinyInteger('type')->default(0);
             $table->longText('timing')->nullable();
             $table->softDeletes();

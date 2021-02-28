@@ -15,7 +15,7 @@ class ProductApiController extends Controller
   {
         return new ProductCollection(
                 Product::with('image', 'brand','attributes')
-                    ->without('category')->paginate(PaginationEnum::Show10Records)
+                    ->without('category')->paginate(PaginationEnum::Show10prRecords)
         );
   }
 

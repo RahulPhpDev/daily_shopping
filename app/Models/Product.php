@@ -19,8 +19,17 @@ class Product extends Model
       'brand_id',
       'category_id',
       'name',
-      'unit_id'
+      'unit_id',
+        'buying_price',
+        'selling_price',
+        'is_popular'
     ];
+
+    protected $casts = [
+        'is_popular' => 'boolean'
+    ];
+
+
     public $with = [ 'category', 'unit'];
 
     public static function boot()
@@ -56,13 +65,6 @@ class Product extends Model
     }
 
 
-    /**
-     * @return HasMany
-     */
-    public function attributes() : HasMany
-    {
-        return $this->hasMany(ProductAttribute::class);
-    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
@@ -70,6 +72,14 @@ class Product extends Model
     public function image() : \Illuminate\Database\Eloquent\Relations\MorphMany
     {
         return $this->morphMany(Image::class, 'image');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function inventory() : HasMany
+    {
+        return $this->hasMany(Inventory::class);
     }
 
 }

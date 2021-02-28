@@ -24,17 +24,25 @@ class ProductRequest extends FormRequest
     public function rules() :array
     {
         return array_merge(
-            $this->productValidation(),
-            $this->attributeValidation()
+            $this->productValidation()
+//            $this->attributeValidation()
         );
     }
 
     public function productValidation():array
     {
         return [
-             'name' => 'required|min:1',
-            'unit_id' => 'required',
-            'category_id' => 'required'
+             'name.*' => 'required|min:1',
+            'unit_id.*' => 'required',
+            'category_id.*' => 'required',
+
+            'brand_id.*' => 'required',
+//            'attribute.*' => 'required|min:2',
+            'quantity.*' => 'required',
+            'buying_price.*' => 'required',
+            'selling_price.*' => 'required',
+            'count_times' => 'required',
+            'is_popular.*' => 'sometimes|nullable'
         ];
     }
 
@@ -42,7 +50,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'brand_id.*' => 'required',
-            'attribute.*' => 'required|min:2',
+//            'attribute.*' => 'required|min:2',
             'quantity.*' => 'required',
             'buying_price.*' => 'required',
             'selling_price.*' => 'required',

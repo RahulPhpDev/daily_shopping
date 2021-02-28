@@ -19,7 +19,6 @@ class Delivery extends Model
         'vehicle_id',
         'deliver_to',
         'deliver_by',
-        'order_product_id'
     ];
 
     /**

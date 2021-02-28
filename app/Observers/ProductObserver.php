@@ -14,11 +14,7 @@ class ProductObserver
     {
             DB::beginTransaction();
             try {
-                $product->attributes->each( function ( $attribute ) {
-                    $attribute->inventory()->delete();
-                } );
-
-                $product->attributes()->delete();
+                $product->inventory()->delete();
 
                 DB::commit();
             } catch (\Exception $e)

@@ -1,17 +1,18 @@
 <tr>
     <td> {{ $record->id }} </td>
     <td> {{ $record->created_at }} </td>
-    <td> {{ $record->productAttribute->selling_price }} </td>
-    <td> {{ $record->productAttribute->buying_price }} </td>
-    <td> {{ $record->quantity  }} ( {!!  $record->productAttribute->product->unit->abbreviation  !!} ) </td>
+    <td> {{ optional($record->product)->selling_price }} </td>
+    <td> {{ optional($record->product)->buying_price }} </td>
+    <td> {{ $record->quantity  }}  </td>
     @if($this->product_id)
-        <td> {{ $record->productAttribute->brand ? $record->productAttribute->brand ->name : '' }} </td>
+        <td> {{ $record->product->name }} </td>
+        <td> {{ $record->product->brand ? $record->product->brand ->name : '' }} </td>
         @elseif($this->brand_id ||  $this->category_id)
-          <td> {{ $record->productAttribute->product->name }} </td>
+          <td> {{ $record->product->name }} </td>
     @else
 
-        <td> {{ $record->productAttribute->product->name }} </td>
-        <td> {{ $record->productAttribute->brand->name }} </td>
+        <td> {{ optional($record->product)->name }} </td>
+        <td> {{ optional($record->brand)->name }} </td>
     @endif
 {{--    <td>--}}
 

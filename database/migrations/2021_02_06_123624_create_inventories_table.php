@@ -17,8 +17,8 @@ class CreateInventoriesTable extends Migration
 
         Schema::create('inventories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_attribute_id');
-            $table->foreign('product_attribute_id')->references('id')->on('product_attributes')->onDelete('cascade');
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->string('quantity', 10)->default(null);
             $table->softDeletes();
             $table->timestamp('created_at')->default(now());

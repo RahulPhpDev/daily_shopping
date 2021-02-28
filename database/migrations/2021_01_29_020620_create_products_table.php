@@ -16,11 +16,18 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid');
-            $table->string('name');
             $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')
+                ->references('id')->on('categories');
+            $table->unsignedBigInteger('brand_id');
+            $table->foreign('brand_id')
+                ->references('id')->on('brands')->onDelete('cascade');
 
-           $table->softDeletes();
+            $table->string('name');
+            $table->string('buying_price');
+            $table->string('selling_price');
+            $table->tinyInteger('is_popular')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

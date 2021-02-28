@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrderProductAttributesTable extends Migration
+class CreateOrderProductTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateOrderProductAttributesTable extends Migration
      */
     public function up()
     {
-        Schema::create('order_product_attributes', function (Blueprint $table) {
+        Schema::create('order_products', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('order_id');
             $table->foreign('order_id')->references('id')->on('orders');
-            $table->unsignedBigInteger('product_attribute_id');
-            $table->foreign('product_attribute_id')
-                ->on( (new App\Models\ProductAttribute) ->getTable())
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')
+                ->on( (new App\Models\Product) ->getTable())
                 ->references('id')->onDelete('cascade');
             $table->string('quantity');
             $table->double('price')->default(0);

@@ -18,10 +18,10 @@ class Inventory extends Component
 
   public $fields = [
           'id',
-          'Added Date',
-          'Selling Price',
-          'Buying Price',
-          'Inventory', // quantity
+      'Added Date',
+      'Selling Price',
+      'Buying Price',
+      'Inventory', // quantity
       ];
 
    public function mount(  )
@@ -34,7 +34,7 @@ class Inventory extends Component
            array_push($this->fields, 'Product');
        }
        else if ( $this->product_id ) {
-           array_push($this->fields, 'Brand');
+           array_push($this->fields, 'Product','Brand');
        }
        else {
            array_push($this->fields, 'Product', 'Brand');
@@ -48,15 +48,14 @@ class Inventory extends Component
 
         $records = InventoryModel::when($this->product_id, function ($query) {
             $query
-                ->with('productAttribute.product.brand')
-                ->with('productAttribute.product')
-                ->whereHas('productAttribute.product' ,
+                ->with('product.brand')
+                ->whereHas('product' ,
                     function( $subQuery) {
                         $subQuery->where('id', $this->product_id);
             }  );
         })
         ->paginate(PaginationEnum::Show10Records);
-//        dd($records);
+//dd($records);
         return view('livewire.admin.inventory.index', [
             'records' =>$records,
             'fields'  => $this->fields

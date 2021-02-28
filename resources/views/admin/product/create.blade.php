@@ -14,7 +14,7 @@
                     <form enctype="multipart/form-data" method="post" action ="{{route('admin.product.store')}}" id ="form">
                         @csrf
                         @include('admin.product.form.product')
-                        @include('admin.product.form.attribute')
+{{--                        @include('admin.product.form.attribute')--}}
 {{--                        @include('admin.product.form.product-image')--}}
                         <div class="row">
                             <div class="input-field col s12">
