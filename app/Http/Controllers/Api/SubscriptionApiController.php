@@ -18,4 +18,14 @@ class SubscriptionApiController extends Controller
             );
         return  new SubscriptionResource( $subscription->loadMissing('product', 'user') );
     }
+
+    public function mySubscription( $user_id )
+    {
+
+        $mySubscription = Subscription::whereHas('userLocation.user' , function ($query) use ($user_id) {
+            $query->where('id', $user_id);
+        }
+        )->with('product', 'user')->get();
+        return SubscriptionResource::collection($mySubscription);
+    }
 }

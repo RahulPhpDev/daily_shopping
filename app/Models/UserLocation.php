@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\User;
 
 class UserLocation extends Model
 {
@@ -12,4 +14,12 @@ class UserLocation extends Model
         'location_id'
     ];
     public $timestamps = false;
+
+    /**
+     * @return BelongsTo
+     */
+    public function user() :BelongsTo
+    {
+       return $this->belongsTo(User::class);
+    }
 }

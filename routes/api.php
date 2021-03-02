@@ -48,4 +48,5 @@ Route::group([
 
     //subscription
     Route::post('subscription/store', 'SubscriptionApiController@store')->name('subscription.store');
+    Route::get('my/subscription/{user_id?}', 'SubscriptionApiController@mySubscription')->name('subscription.mySubscription');
 });
