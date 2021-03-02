@@ -70,5 +70,6 @@ Route::group([
         Route::post('order/assign-driver', 'OrderController@assignDriver')->name('order.assign-driver');
         Route::resource('order', 'OrderController')->except(['create']);
 
+        Route::get('subscription', 'SubscriptionController@index')->name('subscription.index');
 });
 

@@ -77,6 +77,12 @@
                     activeClass="{{ request()->routeIs('admin.order.*') ? 'active' : '' }}"
                 />
                 <x-admin.navigation
+                    names='Subscription'
+                    link='admin.subscription.index'
+                    icon="shopping_cart"
+                    activeClass="{{ request()->routeIs('admin.subscription.*') ? 'active' : '' }}"
+                />
+                <x-admin.navigation
                     names='Advertisement'
                     link='admin.advertisement.index'
                     icon="shopping_cart"
