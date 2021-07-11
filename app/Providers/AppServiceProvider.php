@@ -31,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+         Schema::defaultStringLength(191);
         Blade::component('page-head', PageHead::class);
         User::observe(UserObserver::class);
         Product::observe( ProductObserver::class );
