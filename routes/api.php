@@ -26,13 +26,13 @@ Route::get('advertisement', 'Api\AdvertisementApiController@index');
 
 Route::group([
     'namespace' => 'Api',
-    'middleware' => 'apiToken',
+    'middleware' => 'auth:sanctum',
     'as' => 'api.'
     // api prefix is already in place
 
 ], function () {
 
-    Route::post('login', 'LoginApiController')->withoutMiddleware('apiToken');
+    Route::post('login', 'LoginApiController@login')->withoutMiddleware('auth:sanctum');
     Route::get('categories', 'CategoryApiController@index');
     Route::get('products','ProductApiController@index');
     Route::get('popular/products','ProductApiController@popularProduct');
@@ -49,4 +49,7 @@ Route::group([
     //subscription
     Route::post('subscription/store', 'SubscriptionApiController@store')->name('subscription.store');
     Route::get('my/subscription/{user_id?}', 'SubscriptionApiController@mySubscription')->name('subscription.mySubscription');
+
+    Route::apiResource('referral', 'ReferralController');
+    Route::apiResource('apply-referral', 'ApplyReferralController')->only(['index', 'destroy', 'store']);
 });

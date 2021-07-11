@@ -5,6 +5,7 @@ namespace App;
 use App\Enums\RoleEnum;
 use App\Models\Location;
 use App\Models\Order;
+use App\Models\Referral;
 use App\Models\Roles;
 use App\Models\UserLocation;
 use App\Models\Vehicle;
@@ -18,11 +19,12 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use App\Traits\OrderByTrait;
 use DB;
+use Laravel\Sanctum\HasApiTokens;
 
 
 class User extends Authenticatable
 {
-    use Notifiable,OrderByTrait ;
+    use Notifiable,OrderByTrait, HasApiTokens ;
 
     /**
      * The attributes that are mass assignable.
@@ -132,5 +134,15 @@ class User extends Authenticatable
     public function vehicleOrder() : HasMany
     {
         return $this->hasMany(VehicleOrderProduct::class);
+    }
+
+    public function referral()
+    {
+        return $this->hasOne(Referral::class);
+    }
+
+    public function myReferral()
+    {
+        return $this->hasMany(User::class,  'refered_by');
     }
 }

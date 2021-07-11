@@ -19,9 +19,10 @@ class ValidateApiTokenMiddleware
     public function handle($request, Closure $next)
     {
 
-        if ( \App::environment(['local'] ) ) {
-        return $next($request);
-    }
+//        if ( \App::environment(['local'] ) ) {
+//        return $next($request);
+//    }
+
         if (!$request->header('token'))
         {
             abort(404, 'token not found');
